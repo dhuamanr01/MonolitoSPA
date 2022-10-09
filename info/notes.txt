@@ -1,0 +1,9 @@
+***********
+* GitBash *
+***********
+base64 -w 0 Test.pdf > encode.txt  ** Para pasar de archivo a base64
+base64 -d encode.txt > f.pdf       ** Para pasar de ase64 a archivo
+
+En navegador de internet descargar archivo
+http://127.0.0.1:8080/monolito365/proyecto/archivo/download/stream/5
+
