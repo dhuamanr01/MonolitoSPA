@@ -1,0 +1,318 @@
+<div class="animated fadeIn">
+    <div *ngFor="let alert of alertsDismiss" >
+      <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" style=" bottom:0px; right:0px; position: fixed; z-index: 100; margin-right: 20px;">{{ alert.msg }}</alert>
+    </div>
+    <div class="row" *ngIf="isProyecto && isRoleAdmin" style="margin-bottom: 10px; margin-right: 0px;">
+      <div class="ml-auto">
+        <button type="button" class="btn btn-pill btn-success" (click)="openModal(null)" ><i class="fa fa-plus"></i>&nbsp;Nuevo</button>
+      </div>
+    </div>
+    <div class="row" *ngIf="!isProyecto && isRoleAdmin" style="margin-bottom: 10px; margin-right: 0px;" >
+      <div class="ml-auto">
+        <button type="button" class="btn btn-pill btn-success" (click)="openModalArchivo(null)" ><i class="fa fa-plus"></i>&nbsp;Nuevo Archivo</button>
+      </div>
+    </div>
+    <div class="row" *ngIf="isProyecto">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify"></i> Lista de Proyecto
+          </div>
+          <div class="card-body">
+            <table   class="table table-bordered table-striped table-sm" sorter>
+              <thead>
+                <tr>
+                  <th>Numero</th>
+                  <th>Proyecto</th>
+                  <th>Estado</th>
+                  <th>Usuario</th>
+                  <th>Ver más</th>
+                  <th>Archivos</th>
+                  <th *ngIf="isRoleAdmin">Modificar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of listProyecto; let i = index">
+                    <td class="col-1">{{item.id}}</td>
+                    <td class="col-2">{{item.proyecto}}</td>
+                    <td class="col-2">{{item.estado === true ? 'activo' : 'inactivo'}}</td>
+                    <td class="col-2">{{item.usuario.user_name}}</td>
+                    <td class="col-1" >
+                        <button type="button" (click)="openModalVerMas(item)"  class="btn  btn-ghost-dark" style="margin-right: 0  px;"><i class="fa fa-eye"></i></button>
+                    </td>
+                    <td class="col-1">
+                       <button type="button" (click)="openArchivo(item)"  class="btn  btn-ghost-success"><i class="fa fa-file-o"></i></button>
+                    </td>
+                    <td class="col-1" *ngIf="isRoleAdmin">
+                        <button type="button" (click)="openModal(item)"  class="btn  btn-ghost-primary" style="margin-right: 0  px;"><i class="fa fa-edit"></i></button>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+              <pagination  [totalItems]="totalItems"  [(ngModel)]="currentPage"  [maxSize]="maxSize"  [boundaryLinks]="false" class="pagination-sm"
+                previousText="Atrás" nextText="Siguiente"  (pageChanged)="pageChanged($event)"  (numPages)="smallnumPages = $event"  ></pagination>
+          </div>
+        </div>
+      </div>
+      <!--/.col-->
+    </div>
+
+    <div class="row" *ngIf="!isProyecto">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify"></i> Lista de Archivos de Proyecto
+          </div>
+          <div class="card-body">
+            <table   class="table table-bordered table-striped table-sm" sorter>
+              <thead>
+                <tr>
+                  <th>Numero</th>
+                  <th>Nombre</th>
+                  <th>Archivo</th>
+                  <th>Modificar</th>
+                  <th>Eliminar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of listProyectoArchivo; let i = index">
+                    <td class="col-1">{{item.id}}</td>
+                    <td class="col-2">{{item.nombre}}</td>
+                    <td class="col-1">
+                        <button type="button" (click)="downloadFile(item)"  class="btn btn-ghost-dark" style="margin-right: 0  px;"><i class="fa fa-download"></i></button>
+                    </td>
+                    <td class="col-1">
+                       <button type="button" (click)="openArchivo(item)"  class="btn btn-ghost-primary"><i class="fa fa-edit"></i></button>
+                    </td>
+                    <td class="col-1">
+                        <button type="button" (click)="openModalEliminarArchivo(item)"  class="btn btn-ghost-danger" style="margin-right: 0  px;"><i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination  [totalItems]="totalItemsArchivo"  [(ngModel)]="currentPageArchivo"  [maxSize]="maxSize"  [boundaryLinks]="false" class="pagination-sm"
+              previousText="Atrás" nextText="Siguiente"  (pageChanged)="pageChanged($event)"  (numPages)="smallnumPages = $event"  ></pagination>
+
+            <button type="button" class="btn btn-pill btn-primary" (click)="backProyeco()" ><i class="fa fa-arrow-left"></i>&nbsp;Regresar</button>
+          </div>
+        </div>
+      </div>
+      <!--/.col-->
+    </div>
+
+  <!--/.row-->
+</div>
+
+<div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Registro de Proyecto</h4>
+          <button type="button" class="close" (click)="myModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <form class="example-container" [formGroup]="form" #frmPaciente="ngForm">
+
+            <div [hidden]="true">
+              <input placeholder="ID" required formControlName="id" >
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="name">Proyecto</label>
+                  <input type="text" class="form-control" id="name" placeholder="Ingrese su proyecto" formControlName="proyecto" >
+                </div>
+              </div>
+            </div><!--/.row-->
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="ccnumber">Descripción</label>
+                  <input type="text" class="form-control" id="ccnumber" placeholder="Ingrese su descripción" formControlName="descripcion" >
+                </div>
+              </div>
+            </div><!--/.row-->
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group" *ngIf="isEstado">
+                  <label for="estado">Estado</label>
+                  <select class="form-control" id="estado" formControlName="estado" >
+                    <option value="true">activo</option>
+                    <option value="false">inactivo</option>
+                  </select>
+                </div>
+              </div>
+            </div><!--/.row-->
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="usuario">Usuario</label>
+                    <select class="form-control" id="usuario" formControlName="usuario" >
+                      <option [value]="item.id" *ngFor="let item of listUsuario" >{{item.user_name}}</option>
+                    </select>
+                </div>
+              </div>
+            </div><!--/.row-->
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="fechaExpiracion">Fecha de expiración</label>
+                  <input type="text" class="form-control" id="fechaExpiracion" placeholder="Ingrese su fecha de expiración" formControlName="fechaExpiracion" >
+                </div>
+              </div>
+            </div><!--/.row-->
+
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="myModal.hide()">Cancelar</button>
+          <button type="button" class="btn btn-primary"(click)="save()">Guardar</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #myModalVerMas="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Información de Proyecto</h4>
+        <button type="button" class="close" (click)="myModalVerMas.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form class="example-container" [formGroup]="formVerMas" #frmPaciente="ngForm">
+
+          <div [hidden]="true">
+            <input placeholder="ID" required formControlName="id" >
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="name">Nombre</label>
+                <input type="text" class="form-control" id="name" disabled formControlName="proyecto" >
+              </div>
+            </div>
+          </div><!--/.row-->
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="ccnumber">Descripción</label>
+                <input type="text" class="form-control" id="ccnumber" disabled formControlName="descripcion" >
+              </div>
+            </div>
+          </div><!--/.row-->
+          <div class="row" *ngIf="isRoleAdmin">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="ccnumber">Fecha de expiración</label>
+                <input type="text" class="form-control" id="ccnumber"  disabled formControlName="fechaExpiracion" >
+              </div>
+            </div>
+          </div><!--/.row-->
+          <div class="row" *ngIf="isRoleAdmin">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="ccnumber">Fecha de registro</label>
+                <input type="text" class="form-control" id="ccnumber"  disabled formControlName="fechaRegistro" >
+              </div>
+            </div>
+          </div><!--/.row-->
+          <div class="row" *ngIf="isRoleAdmin">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="ccnumber">Fecha de modificacion</label>
+                <input type="text" class="form-control" id="ccnumber"  disabled formControlName="fechaModificacion" >
+              </div>
+            </div>
+          </div><!--/.row-->
+
+        </form>
+ 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="myModalVerMas.hide()">Ok</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #myModalArchivo="bs-modal" class="modal fade"    data-bs-backdrop="static" data-bs-keyboard="false"
+  id="sendOtpModal" tabIndex="-1" aria-labelledby="sendOtpModalLabel" aria-hidden="true"
+  aria-labelledby="myModalLabel" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Información de Archivo</h4>
+        <button type="button" class="close" (click)="myModalArchivo.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form class="example-container" [formGroup]="formArchivo" #frmPaciente="ngForm">
+
+          <div [hidden]="true">
+            <input placeholder="ID" required formControlName="id" >
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="name">Nombre</label>
+                <input type="file" class="form-control" id="name" formControlName="file" placeholder="" (change)="onFileSelected($event)">
+              </div>
+            </div>
+          </div><!--/.row-->
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="myModalArchivo.hide()">Cancelar</button>
+        <button type="button" class="btn btn-primary"(click)="saveArchivo()">Guardar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+<div bsModal #myModalEliminarArchivo="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Eliminar Archivo</h4>
+        <button type="button" class="close" (click)="myModalEliminarArchivo.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form class="example-container" [formGroup]="form" #frmPaciente="ngForm">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="name">Desea eliminar el archivo {{nameFileDelete}}</label>
+              </div>
+            </div>
+          </div><!--/.row-->
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="myModalEliminarArchivo.hide()">Cancelar</button>
+        <button type="button" class="btn btn-danger"(click)="deleteArchivo()">Eliminar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
