@@ -1,18 +1,18 @@
 /*
- Navicat PostgreSQL Data Transfer
+ Navicat Premium Data Transfer
 
- Source Server         : lnvwinqa_13.2.1_5432
+ Source Server         : BDPOSTGRES
  Source Server Type    : PostgreSQL
- Source Server Version : 130002
- Source Host           : 192.168.1.76:5432
+ Source Server Version : 120007
+ Source Host           : localhost:5432
  Source Catalog        : postgres
  Source Schema         : monolito365
 
  Target Server Type    : PostgreSQL
- Target Server Version : 130002
+ Target Server Version : 120007
  File Encoding         : 65001
 
- Date: 31/08/2021 01:22:00
+ Date: 16/10/2022 22:11:13
 */
 
 
@@ -110,10 +110,11 @@ CREATE TABLE "monolito365"."archivos_proyectos" (
 -- ----------------------------
 -- Records of archivos_proyectos
 -- ----------------------------
-INSERT INTO "monolito365"."archivos_proyectos" VALUES (5, '2021-08-30 22:49:02.655', 'TIT3', 'Test.pdf', NULL, 3);
-INSERT INTO "monolito365"."archivos_proyectos" VALUES (6, '2021-08-30 22:51:06.472', 'TIT4', 'Test.docx', NULL, 3);
-INSERT INTO "monolito365"."archivos_proyectos" VALUES (7, '2021-08-30 22:51:37.231', 'TIT5', 'Test.xlsx', NULL, 3);
-INSERT INTO "monolito365"."archivos_proyectos" VALUES (10, '2021-08-31 01:16:50.137', 'TIT0099', 'Test9999.docx', NULL, 3);
+INSERT INTO "monolito365"."archivos_proyectos" VALUES (1, '2022-08-18 21:55:14.859', 'AUDITORIA DE SISTEMA DE GESTION SST.PDF', 'Auditoria de Sistema de Gestion SST.pdf', NULL, 1);
+INSERT INTO "monolito365"."archivos_proyectos" VALUES (2, '2022-08-28 22:46:15.11', 'HIGIENE INDUSTRIAL.PDF', 'Higiene Industrial.pdf', NULL, 2);
+INSERT INTO "monolito365"."archivos_proyectos" VALUES (3, '2022-08-28 22:46:35.03', 'MONITOREO DE AGENTES OCUPACIONALES.PDF', 'Monitoreo de Agentes Ocupacionales.pdf', NULL, 3);
+INSERT INTO "monolito365"."archivos_proyectos" VALUES (4, '2022-08-28 22:46:47.73', 'PLAN COVID-19.PDF', 'Plan COVID-19.pdf', NULL, 4);
+INSERT INTO "monolito365"."archivos_proyectos" VALUES (5, '2022-09-05 19:40:55.504', 'SENIALIZACION MARITIMA.PDF', 'Senializacion Maritima.pdf', NULL, 7);
 
 -- ----------------------------
 -- Table structure for auth_servicio
@@ -145,6 +146,7 @@ INSERT INTO "monolito365"."auth_servicio" VALUES (460, 'DELETE', 2, '/proyecto/a
 INSERT INTO "monolito365"."auth_servicio" VALUES (360, 'DELETE', 3, '/proyecto/**');
 INSERT INTO "monolito365"."auth_servicio" VALUES (420, 'POST', 3, '/proyecto/archivo/**');
 INSERT INTO "monolito365"."auth_servicio" VALUES (440, 'PUT', 2, '/proyecto/archivo/**');
+INSERT INTO "monolito365"."auth_servicio" VALUES (203, 'GET', 4, '/usuario/findByUserName/**');
 
 -- ----------------------------
 -- Table structure for auth_servicio_role
@@ -189,6 +191,8 @@ INSERT INTO "monolito365"."auth_servicio_role" VALUES (26, 400, 2);
 INSERT INTO "monolito365"."auth_servicio_role" VALUES (27, 420, 2);
 INSERT INTO "monolito365"."auth_servicio_role" VALUES (28, 440, 2);
 INSERT INTO "monolito365"."auth_servicio_role" VALUES (29, 460, 2);
+INSERT INTO "monolito365"."auth_servicio_role" VALUES (30, 203, 1);
+INSERT INTO "monolito365"."auth_servicio_role" VALUES (31, 203, 2);
 
 -- ----------------------------
 -- Table structure for clientes
@@ -214,12 +218,6 @@ CREATE TABLE "monolito365"."clientes" (
 -- ----------------------------
 -- Records of clientes
 -- ----------------------------
-INSERT INTO "monolito365"."clientes" VALUES (1, NULL, 'Mz H Lt 9 Pj 2 De Junio', 'servivega2002@gmail.com', '2020-03-04', '2020-03-04', 'Servi Vega E.I.R.L.', '20100003351', 'http://www.servivegaeirl.com', '043343714', '043343714', 2, 6);
-INSERT INTO "monolito365"."clientes" VALUES (2, NULL, 'Metal Mecanica Mariategui S.A.C.', 'metalmariategui@hotmail.com', NULL, '2020-03-04', 'Metal Mecanica Mariategui S.A.C.', '20100003352', NULL, '043352099', NULL, 2, 7);
-INSERT INTO "monolito365"."clientes" VALUES (3, NULL, 'Av. Brasil A-30 Urb. Los Álamos Nuevo Chimbote - Ancash - Perú', 'info@comet.com.pe', NULL, '2020-03-04', 'Comet S.R.L', '20100003353', NULL, '043318308', NULL, 2, NULL);
-INSERT INTO "monolito365"."clientes" VALUES (6, NULL, 'Av. Industrial 1240, Chimbote', 'sales@copeinca.com.pe', NULL, '2020-03-04', 'Corporación Pesquera Inca S.A.C', '20100003356', NULL, '043365878', NULL, 2, NULL);
-INSERT INTO "monolito365"."clientes" VALUES (4, NULL, 'Calle Chiclayo N° 157 Dpto. 401, Miraflores-Chimbote', 'informes@ifm.com.pe', NULL, '2020-03-04', 'Ingeniería, Fabricación y Montaje SAC', '20100003354', NULL, '043316688', NULL, 2, 3);
-INSERT INTO "monolito365"."clientes" VALUES (5, NULL, 'Av. Los Pescadores s/n, Zona Industrial 27 de Octubre, Chimbote.', 'comunicaciones@tasa.com.pe', NULL, '2020-03-04', 'TASA', '20100003355', NULL, '043352160', NULL, 2, 3);
 
 -- ----------------------------
 -- Table structure for proyectos
@@ -240,11 +238,13 @@ CREATE TABLE "monolito365"."proyectos" (
 -- ----------------------------
 -- Records of proyectos
 -- ----------------------------
-INSERT INTO "monolito365"."proyectos" VALUES (1, '2020-08-15 00:00:00', 'proyecto 1', 'f', '2020-10-01 00:00:00', 'proyecto 1', NULL, 2);
-INSERT INTO "monolito365"."proyectos" VALUES (2, '2020-08-20 00:00:00', 'proyecto 2', 'f', '2020-12-20 00:00:00', 'proyecto 2', NULL, 3);
-INSERT INTO "monolito365"."proyectos" VALUES (3, '2021-08-20 00:00:00', 'proyecto 3', 't', '2021-11-01 00:00:00', 'proyecto 3', NULL, 3);
-INSERT INTO "monolito365"."proyectos" VALUES (4, '2021-08-29 13:59:56.256', 'test', 't', '2021-01-01 13:59:56.256', 'PROJECT 01', NULL, 2);
-INSERT INTO "monolito365"."proyectos" VALUES (5, '2021-08-29 14:10:34.464', 'test update', 'f', '2021-08-30 14:41:45.305', 'PROJECT X02', '2021-08-29 14:42:15.42', 1);
+INSERT INTO "monolito365"."proyectos" VALUES (2, '2022-08-21 21:33:37.441', 'Higiene Industrial', 't', '2022-10-13 21:33:37.441', 'Higiene Industrial', NULL, 2);
+INSERT INTO "monolito365"."proyectos" VALUES (3, '2022-08-28 22:38:05.933', 'Monitoreo de Agentes Ocupacionales.', 't', '2023-01-28 22:38:05.932', 'Monitoreo de Agentes Ocupacionales.', NULL, 5);
+INSERT INTO "monolito365"."proyectos" VALUES (4, '2022-08-28 22:38:58.42', 'Plan COVID-19', 't', '2022-12-28 22:38:58.42', 'Plan COVID-19', NULL, 6);
+INSERT INTO "monolito365"."proyectos" VALUES (5, '2022-08-28 22:39:29.493', 'Sistema de alarma contra incendios.', 't', '2023-01-20 22:39:29.492', 'Sistema de alarma contra incendios.', NULL, 6);
+INSERT INTO "monolito365"."proyectos" VALUES (6, '2022-08-28 22:40:16.192', 'Señalizacion Industrial.', 't', '2023-02-27 22:45:11.396', 'Señalizacion Industrial', '2022-08-28 22:45:11.396', 4);
+INSERT INTO "monolito365"."proyectos" VALUES (7, '2022-09-05 19:40:42.147', 'Senializacion Maritima', 't', '2023-03-05 19:40:42.147', 'Senializacion Maritima', NULL, 5);
+INSERT INTO "monolito365"."proyectos" VALUES (1, '2022-08-18 21:27:24.635', 'Auditoria de Sistema de Gestion SST.', 't', '2022-10-18 19:55:57.25', 'Auditoria de Sistema de Gestion SSTT', '2022-09-05 19:55:57.25', 1);
 
 -- ----------------------------
 -- Table structure for reset_token
@@ -261,8 +261,6 @@ CREATE TABLE "monolito365"."reset_token" (
 -- ----------------------------
 -- Records of reset_token
 -- ----------------------------
-INSERT INTO "monolito365"."reset_token" VALUES (1, '2021-08-27 20:13:38', 'XXXX', 3);
-INSERT INTO "monolito365"."reset_token" VALUES (2, '2021-08-27 20:13:51', 'YYY', 3);
 
 -- ----------------------------
 -- Table structure for roles
@@ -298,8 +296,8 @@ CREATE TABLE "monolito365"."tipos_documentos" (
 -- ----------------------------
 -- Records of tipos_documentos
 -- ----------------------------
-INSERT INTO "monolito365"."tipos_documentos" VALUES (1, '2020-03-04 00:00:00', 'DNI', '2020-03-04 00:00:00');
-INSERT INTO "monolito365"."tipos_documentos" VALUES (2, '2020-03-04 00:00:00', 'RUC', '2020-03-04 00:00:00');
+INSERT INTO "monolito365"."tipos_documentos" VALUES (1, '2020-03-04 00:00:00', 'DNI', '2021-03-04 00:00:00');
+INSERT INTO "monolito365"."tipos_documentos" VALUES (2, '2020-03-04 00:00:00', 'RUC', '2021-03-04 00:00:00');
 
 -- ----------------------------
 -- Table structure for usuarios
@@ -319,70 +317,67 @@ CREATE TABLE "monolito365"."usuarios" (
 -- ----------------------------
 -- Records of usuarios
 -- ----------------------------
-INSERT INTO "monolito365"."usuarios" VALUES (1, '2020-02-23 00:00:00', 't', '12345', '2020-02-23 00:00:00', 'mportilla2020', 1);
-INSERT INTO "monolito365"."usuarios" VALUES (2, '2020-02-23 00:00:00', 't', '1234', '2020-02-23 00:00:00', 'copeinca2020', 2);
-INSERT INTO "monolito365"."usuarios" VALUES (4, '2020-02-23 00:00:00', 't', '1234', '2020-02-23 00:00:00', 'mqtasa2020', 2);
-INSERT INTO "monolito365"."usuarios" VALUES (5, '2021-08-19 00:00:00', 't', '0246', '2021-08-19 00:00:00', 'dhuamanr', 1);
-INSERT INTO "monolito365"."usuarios" VALUES (6, '2021-08-19 00:00:00', 't', '1234', '2021-08-19 00:00:00', 'comet0120', 2);
-INSERT INTO "monolito365"."usuarios" VALUES (7, '2021-08-19 00:00:00', 't', '1234', '2021-08-19 00:00:00', 'pesinca2018', 2);
-INSERT INTO "monolito365"."usuarios" VALUES (9, '2021-08-28 22:30:49.08', 't', 'xxxx', NULL, 'Carlos', 2);
-INSERT INTO "monolito365"."usuarios" VALUES (8, '2021-08-28 21:21:01.334', 'f', '999', '2021-08-28 22:36:20.117', 'Juancho', 1);
-INSERT INTO "monolito365"."usuarios" VALUES (10, '2021-08-28 22:42:44.075', 'f', '999', '2021-08-28 22:44:07.684', 'Juancho', 1);
-INSERT INTO "monolito365"."usuarios" VALUES (11, '2021-08-29 01:06:43.269', 'f', '999', '2021-08-29 01:07:50.257', 'Juancho', 1);
-INSERT INTO "monolito365"."usuarios" VALUES (12, '2021-08-29 01:12:44.116', 't', 'xxxx', NULL, 'Juancho', 2);
-INSERT INTO "monolito365"."usuarios" VALUES (13, '2021-08-29 01:30:19.123', 'f', '999', '2021-08-29 01:31:00.176', 'Juancho44', 1);
-INSERT INTO "monolito365"."usuarios" VALUES (14, '2021-08-30 19:13:42.785', 'f', '555', '2021-08-30 19:19:19.188', 'YYYYYYY', 2);
-INSERT INTO "monolito365"."usuarios" VALUES (15, '2021-08-30 21:56:50.211', 't', '999', NULL, 'Test01', 1);
-INSERT INTO "monolito365"."usuarios" VALUES (3, '2020-02-23 00:00:00', 't', '555', '2021-08-30 21:57:55.927', 'Test0X', 2);
+INSERT INTO "monolito365"."usuarios" VALUES (1, '2022-08-14 22:38:10', 't', '1234', '2022-08-18 22:16:24.996', 'mportilla', 1);
+INSERT INTO "monolito365"."usuarios" VALUES (2, '2022-08-18 21:25:34.701', 't', '1234', '2022-08-18 22:13:24.294', 'equenhua', 1);
+INSERT INTO "monolito365"."usuarios" VALUES (4, '2022-08-21 21:36:17.296', 't', '1234', NULL, 'copeinca2022', 2);
+INSERT INTO "monolito365"."usuarios" VALUES (5, '2022-08-21 21:36:34.914', 't', '1234', NULL, 'jpsima2022', 2);
+INSERT INTO "monolito365"."usuarios" VALUES (6, '2022-08-21 21:37:13.937', 't', '1234', NULL, 'mqtasa2022', 2);
+INSERT INTO "monolito365"."usuarios" VALUES (7, '2022-08-21 21:37:27.886', 't', '1234', NULL, 'comet2022', 2);
+INSERT INTO "monolito365"."usuarios" VALUES (8, '2022-08-21 21:37:40.444', 't', '12234', NULL, 'cfginv2022', 2);
+INSERT INTO "monolito365"."usuarios" VALUES (9, '2022-08-21 21:38:07.158', 't', '1234', NULL, 'exalmar2022', 2);
+INSERT INTO "monolito365"."usuarios" VALUES (10, '2022-08-21 21:38:46.691', 't', '1234', NULL, 'pcentinela2022', 2);
+INSERT INTO "monolito365"."usuarios" VALUES (11, '2022-08-21 21:39:04.967', 't', '1234', NULL, 'pgomez2022', 2);
+INSERT INTO "monolito365"."usuarios" VALUES (12, '2022-09-30 23:22:50.711', 't', '1234', NULL, 'test3009', 1);
+INSERT INTO "monolito365"."usuarios" VALUES (13, '2022-10-02 18:00:10.914', 't', '1234', NULL, 'test0210', 2);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "monolito365"."archivos_proyectos_id_seq"
 OWNED BY "monolito365"."archivos_proyectos"."id";
-SELECT setval('"monolito365"."archivos_proyectos_id_seq"', 11, true);
+SELECT setval('"monolito365"."archivos_proyectos_id_seq"', 6, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "monolito365"."clientes_id_seq"
 OWNED BY "monolito365"."clientes"."id";
-SELECT setval('"monolito365"."clientes_id_seq"', 7, false);
+SELECT setval('"monolito365"."clientes_id_seq"', 8, false);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "monolito365"."proyectos_id_seq"
 OWNED BY "monolito365"."proyectos"."id";
-SELECT setval('"monolito365"."proyectos_id_seq"', 6, true);
+SELECT setval('"monolito365"."proyectos_id_seq"', 8, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "monolito365"."reset_token_id_seq"
 OWNED BY "monolito365"."reset_token"."id";
-SELECT setval('"monolito365"."reset_token_id_seq"', 3, false);
+SELECT setval('"monolito365"."reset_token_id_seq"', 4, false);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "monolito365"."roles_id_seq"
 OWNED BY "monolito365"."roles"."id";
-SELECT setval('"monolito365"."roles_id_seq"', 3, false);
+SELECT setval('"monolito365"."roles_id_seq"', 4, false);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "monolito365"."tipos_documentos_id_seq"
 OWNED BY "monolito365"."tipos_documentos"."id";
-SELECT setval('"monolito365"."tipos_documentos_id_seq"', 3, false);
+SELECT setval('"monolito365"."tipos_documentos_id_seq"', 4, false);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "monolito365"."usuarios_id_seq"
 OWNED BY "monolito365"."usuarios"."id";
-SELECT setval('"monolito365"."usuarios_id_seq"', 16, true);
+SELECT setval('"monolito365"."usuarios_id_seq"', 14, true);
 
 -- ----------------------------
 -- Indexes structure for table archivos_proyectos
